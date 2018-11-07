@@ -1,0 +1,11 @@
+.bg-white{
+    background-color: red;
+    border-bottom: 1px solid grey;
+}
+body{
+    background-color: #fafafa;
+    height: 2000px;
+}
+.navbar-items{
+    display: flex;
+}
