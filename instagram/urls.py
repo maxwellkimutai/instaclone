@@ -20,5 +20,7 @@ from django.contrib.auth import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'',include('maxigram.urls'))
+    url(r'',include('maxigram.urls')),
+    url(r'^accounts/', include('django_registration.backends.activation.urls')),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
 ]
