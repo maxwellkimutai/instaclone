@@ -1,0 +1,64 @@
+{% include 'base.html' %}
+{%block content%}
+<div class="container">
+    <div class="row my-5" style="margin-left:60px; margin-right:60px;">
+        <div class="row mx-auto">
+            <div class="media mx-auto">
+                <div class="col-md-4">
+                    <img class="align-self-start mr-3 my-3 rounded-circle cropped" src="{{profile.profile_photo.url}}" alt="Profile Photo" >
+                </div>
+                <div class="col-md-8">
+                <div class="media-body">
+                    <span><h4 style="padding-top: 20px;">{{profile.user.username}}</h4> </span>
+                    <span>1 post 1 follower 1 following</span>
+                    <h5>{{profile.user.get_full_name}}</h5>
+                    <p class="w-75">{{profile.bio}}</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="row my-5 py-5">
+            {%for image in images%}
+                <div class="col-md-4">
+                    <img src="{{image.image.url}}" class="img-thumbnail crop" alt="">
+                </div>
+            {%endfor%}
+        </div>
+        <div class="fileinput fileinput-new" data-provides="fileinput">
+          <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+            <img data-src="holder.js/100%x100%" alt="...">
+          </div>
+          <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+          <div>
+            <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
+            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+          </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content fileinput fileinput-new" data-provides="fileinput">
+          <div class="modal-body">
+                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                  <img data-src="holder.js/100%x100%" alt="...">
+                </div>
+                <div id="image" class="fileinput-preview fileinput-exists thumbnail"></div>
+          </div>
+          <div class="modal-footer">
+            <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('#image').bind('DOMSubtreeModified',function(event) {
+        	$('#image').find('img').addClass('img-fluid');
+        });
+    });
+    </script>
+</div>
+{%endblock%}
