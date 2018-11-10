@@ -1,7 +1,7 @@
-<nav class="navbar navbar-light bg-white sticky-top">
+<nav class="navbar navbar-light bg-white sticky-top" style="box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 5px rgba(0,0,0,.075); padding-left:120px; padding-right:120px;">
     <div class="container navbar-items" >
-        <div class="d-flex justify-content-start"><a class="navbar-brand" href="#">Instagram</a></div>
+        <div class="d-flex justify-content-start"><a class="navbar-brand" href="{% url 'index' %}">Instagram</a></div>
         <div class="d-flex justify-content-center navbar-item"> <p>Search</p> </div>
-        <div class="d-flex justify-content-end"> <p>Icons</p> </div>
+        <div class="d-flex justify-content-end"><i class="fas fa-plus-circle" data-toggle="modal" data-target="#exampleModal"></i><a href="{%url 'profile' user%} "> <i class="far fa-user"></i></a> </div>
     </div>
 </nav>
