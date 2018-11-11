@@ -8,12 +8,12 @@ class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
 
 class Image(models.Model):
-    image = models.ImageField(upload_to = 'images/',blank=True)
+    image = models.ImageField(upload_to = 'images/')
     image_name = models.CharField(max_length = 30)
     image_caption = models.TextField()
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
-    likes = models.IntegerField()
+    likes = models.ManyToManyField(User, blank=True,related_name='post_likes')
     pub_date = models.DateTimeField(auto_now_add=True,null=True)
 
     def __str__(self):
