@@ -1,1 +1,34 @@
 {% include 'base.html' %}
+{% block content%}
+{% for image in images%}
+<div class="">
+    <div class="card my-3 mx-auto w-50">
+        <div class="card-header bg-white">
+            <div class="header media" style="background-color:white;">
+                <img src="{{image.profile.profile_photo.url}}" class="mr-3 rounded-circle" width="50px" height="50px">
+                <div class="media-body">
+                    <h4 class="my-0">{{image.profile.user}}</h4>
+                </div>
+            </div>
+        </div>
+        <img src="{{image.image.url}}" class="card-img-top" style="padding: 0px; margin:0px;">
+        <div class="card-body">
+            <i class="far fa-heart" id="likes{{image.id}}" data-imgid="{{image.id}}" data-liker={{user}}></i>
+            <p>{{image.likes.all.count}} likes <br> <strong> <a href="{%url 'profile' image.user%}">{{image.user}}</a></strong> {{image.image_caption}} <br> <span class="text-secondary">{{image.pub_date|timesince}} ago</span> </p>
+            <hr>
+        </div>
+        <script type="text/javascript">
+            $('#likes{{image.id}}').click(function() {
+                var imaid;
+                var user;
+                imgid = $(this).attr("data-imgid");
+                user = $(this).attr("data-liker");
+                $.get('/ajax-like-photo', {image_id: imgid, user: user}, function(data){
+
+                });
+            });
+        </script>
+</div>
+
+{%endfor%}
+{% endblock %}
