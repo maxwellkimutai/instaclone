@@ -1,5 +1,6 @@
 {% include 'base.html' %}
 {% block content%}
+{% load bootstrap4 %}
 {% for image in images%}
 <div class="">
     <div class="card my-3 mx-auto w-50">
@@ -14,18 +15,54 @@
         <img src="{{image.image.url}}" class="card-img-top" style="padding: 0px; margin:0px;">
         <div class="card-body">
             <i class="far fa-heart" id="likes{{image.id}}" data-imgid="{{image.id}}" data-liker={{user}}></i>
-            <p>{{image.likes.all.count}} likes <br> <strong> <a href="{%url 'profile' image.user%}">{{image.user}}</a></strong> {{image.image_caption}} <br> <span class="text-secondary">{{image.pub_date|timesince}} ago</span> </p>
+            <p> <span id="like{{image.id}}">{{image.likes.all.count}}</span> likes <br> <strong> <a href="{%url 'profile' image.user%}">{{image.user}}</a></strong> {{image.image_caption}} <br> <span class="text-secondary">{{image.pub_date|timesince}} ago</span> </p>
             <hr>
+            <form method="post" enctype="multipart/form-data" id='comment{{image.id}}'>
+                {% csrf_token %}
+                {% bootstrap_form form%}
+            </form>
+            <div id="card{{image.id}}" class="mt-2">
+                {%for comment in comments%}
+                    {%if comment.image == image.id%}
+                    <p>
+                        <strong>{{comment.user.username}}</strong> {{comment.comment}}
+                    </p>
+                    {%endif%}
+                {%endfor%}
+            </div>
         </div>
         <script type="text/javascript">
             $('#likes{{image.id}}').click(function() {
                 var imaid;
                 var user;
+                var likes = {{image.likes.all.count}} + 1
                 imgid = $(this).attr("data-imgid");
                 user = $(this).attr("data-liker");
                 $.get('/ajax-like-photo', {image_id: imgid, user: user}, function(data){
-
+                    $('#like{{image.id}}').empty();
+                    $('#like{{image.id}}').append(likes);
                 });
+
+            });
+            $('#comment{{image.id}}').submit(function(event) {
+                comment = $(this).find('#id_comment').val();
+                image = {{image.id}};
+
+                $.ajax({
+                    url: '/ajax/comment/',
+                    data: {
+                      'comment': comment,
+                      'image': image
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#card{{image.id}}').append(
+                            `<p> <strong>${data.latest_comment_user}</strong> ${data.latest_comment}</p>`
+                        );
+                        $('#comment{{image.id}}')[0].reset();
+                    }
+                  });
+                  event.preventDefault()
             });
         </script>
 </div>
