@@ -1,92 +1,137 @@
-{% include 'base.html' %}
-{% load crispy_forms_tags %}
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% load staticfiles %}
 
-{%block content%}
+{% block content %}
+{{block.super}}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="../static/css/profile.css">
+
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+
+</head>
+
 <div class="container">
-    <div class="row my-5" style="margin-left:60px; margin-right:60px;">
-        <div class="row mx-auto">
-            <div class="media mx-auto">
-                <div class="col-md-4">
-                    <img class="align-self-center mr-3 my-3 rounded-circle cropped" src="{{profile.profile_photo.url}}" alt="Profile Photo" >
-                </div>
-                <div class="col-md-8">
-                <div class="media-body">
-                    <span><h4 style="padding-top: 20px;">{{profile.user.username}}</h4> </span>
-                    <span>{{images.count}} post 1 follower 1 following</span>
-                    <h5>{{profile.user.get_full_name}}</h5>
-                    <p class="w-75">{{profile.bio}}</p>
-                </div>
-            </div>
-            </div>
-        </div>
-        <div class="row my-5 py-5">
-            {%for image in images%}
-                <div class="col-md-4">
-                    <img src="{{image.image.url}}" class="img-thumbnail crop" alt="">
-                </div>
-            {%endfor%}
-        </div>
-        <!-- <div class="fileinput fileinput-new" data-provides="fileinput">
-          <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-            <img data-src="holder.js/100%x100%" alt="...">
-          </div>
-          <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
-          <div>
-            <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
-            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-          </div>
-        </div> -->
-    </div>
-    <!-- Modal -->
-    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content fileinput fileinput-new" data-provides="fileinput">
-          <div class="modal-body">
-                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                  <img data-src="holder.js/100%x100%" alt="...">
-                </div>
-                <div id="image" class="fileinput-preview fileinput-exists thumbnail"></div>
-                <form class="" action="index.html" method="post">
 
-                </form>
-          </div>
-          <div class="modal-footer">
-            <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+  <div class="profile">
+
+    <div class="profile-image">
+
+      <img src="{{profile.profile_photo.url}}" class=" img img-responsive" >
+
+    </div>
+
+    <div class="profile-user-settings">
+
+      <h1 class="profile-user-name">{{profile.user.username}}</h1>
+
+      {% if user == profile.user%}
+      <button class="btn profile-edit-btn"> <a href="{%url 'edit_profile' profile.user%}">Edit Profile</a></button>
+
+      <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true" data-toggle="modal" data-target="#settings"></i></button>
+      {%endif%}
+    </div>
+
+    <div class="profile-stats">
+
+      <ul>
+        <li><span class="profile-stat-count">{{images.count}}</span> posts</li>
+        <li><span class="profile-stat-count">0</span> followers</li>
+        <li><span class="profile-stat-count">0</span> following</li>
+      </ul>
+
+    </div>
+
+    <div class="profile-bio">
+
+      <p><span class="profile-real-name">{{profile.user.get_full_name}}</span></p>
+      <p style="white-space:pre-wrap;">{{profile.bio | safe}}</p>
+
+    </div>
+
+  </div>
+  <!-- End of profile section -->
+
+  <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content settings-modal">
+
+        <div class="modal-body">
+          <div class="text-center">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><button class="btn btn-primary btn-lg" href="{url 'logout'}">Log Out</button></li>
+            </ul>
         </div>
+        </div>
+
       </div>
-    </div> -->
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+    </div>
+  </div>
+
+</div>
+<!-- End of container -->
+
+</header>
+
+<main>
+
+<div class="container">
+
+  <div class="gallery">
+
+    {% for image in images %}
+
+
+
+    <div class="gallery-item" tabindex="0" data-toggle="modal" data-target="#{{image.id}}">
+
+      <img src="{{image.image.url}}?w=500&h=500&fit=crop" class="gallery-image"  id="likes-{{forloop.counter0}}" data-comid="{{image.id}}" >
+      <div class="gallery-item-info">
+        <ul>
+          <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>{{image.likes.all.count}}</li>
+          <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i>80</li>
+        </ul>
+    </div>
+
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <div class="custom-card-header">
+          <div class="modal-profile-image">
+            <img src="{{post.profile_pic.url}}?w=50&h=50&fit=crop" class="gallery-image" alt=""  width=8 height=8>
           </div>
-          <form method="post" enctype="multipart/form-data">
-              <div class="modal-body">
-                      {% csrf_token %}
-                      {{ form|crispy }}
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success">Save image</button>
-              </div>
-          </form>
+              <p class="username">{{post.username}}</p>
+              <footer class="location">{{post.location}}</footer>
+          </div>
+
+        </div>
+        <div class="modal-body">
+              <img src="{{post.post.url}}?w=800&h=1000&fit=crop" class="gallery-image like" id="likes-{{forloop.counter0}}" data-comid="{{post.id}}">
+        </div>
+        <div class="modal-footer">
+          <p class="card-title username like"  id="likes-{{forloop.counter0}}" data-comid="{{post.id}}" >{{post.likes}} likes</p>
+          <p class="username">{{post.username}} <span class="caption">{{post.caption|truncatechars:300 |safe }}</span></p>
+
         </div>
       </div>
     </div>
-    <script type="text/javascript">
-    $(document).ready(function(){
-        $('#image').bind('DOMSubtreeModified',function(event) {
-        	$('#image').find('img').addClass('img-fluid');
-        });
-    });
-    </script>
-</div>
-{%endblock%}
+  </div>
+
+  {% endfor%}
+
+    </div>
+  <!-- End of gallery -->
+
+<!-- End of container -->
+</main>
+{% endblock %}
