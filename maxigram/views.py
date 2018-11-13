@@ -26,6 +26,7 @@ def profile(request,username):
         user = User.objects.get(username = username)
         profile = Profile.objects.get(user = user)
         images = Image.objects.filter(profile = profile)
+        following = Profile.objects.filter(followers = user).count()
 
     except ObjectDoesNotExist:
         return redirect('edit_profile',current_user)
@@ -39,7 +40,7 @@ def profile(request,username):
             image.save()
     else:
         form = NewImageForm()
-    return render(request,"profile.html",{"profile":profile, "images":images, "form":form})
+    return render(request,"profile.html",{"profile":profile, "images":images, "form":form,"following":following})
 
 def ajaxlikephoto(request):
     img_id = None
@@ -77,12 +78,12 @@ def ajax_comment(request):
 def search(request):
     if request.is_ajax():
         q = request.GET.get('term', '')
-        places = User.objects.filter(username__icontains=q)
+        users = User.objects.filter(username__icontains=q)
         results = []
-        for pl in places:
-            place_json = {}
-            place_json = pl.username
-            results.append(place_json)
+        for user in users:
+            user_json = {}
+            user_json = user.username
+            results.append(user_json)
             data = json.dumps(results)
     else:
         data = 'fail'
@@ -92,7 +93,7 @@ def search(request):
 def search_user(request):
     if 'username' in request.GET and request.GET['username']:
         username = request.GET.get('username')
-        searched_user = User.objects.get(username = username)
+        searched_user = Profile.search(username)
 
         return redirect('profile',username = searched_user)
 
@@ -112,3 +113,21 @@ def edit_profile(request,username):
         form = ProfileForm()
 
     return render(request,'edit_profile.html',{"form":form})
+
+def follow_user(request):
+    user_id = None
+    profile_id = None
+    data = {}
+
+    if request.method == 'GET':
+        user_id = request.GET['user_id']
+        profile_id = request.GET['profile_id']
+
+        user = User.objects.get(id = user_id)
+    if Profile.objects.filter(id=profile_id,followers = user).exists():
+        data['message'] = "You are already following this user."
+    else:
+        profile = Profile.objects.get(id=profile_id)
+        profile.followers.add(user)
+        data['message'] = "You are now following {}".format(profile.user.username)
+    return JsonResponse(data, safe=False)

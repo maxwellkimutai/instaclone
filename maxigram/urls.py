@@ -10,7 +10,8 @@ urlpatterns = [
     url(r'^ajax/comment/$',views.ajax_comment),
     url(r'^ajax/search/', views.search,name='search'),
     url(r'^search/$',views.search_user,name='search_user'),
-    url(r'^edit_profile/(?P<username>\w{0,50})',views.edit_profile,name='edit_profile')
+    url(r'^edit_profile/(?P<username>\w{0,50})',views.edit_profile,name='edit_profile'),
+    url(r'^follow/$', views.follow_user,name='follow_user')
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -32,7 +32,7 @@
             <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script> -->
             <script>
                 $(function() {
-                    $("#places").autocomplete({
+                    $("#users").autocomplete({
                       source: "/ajax/search",
                       select: function (event, ui) { //item selected
                         AutoCompleteSelectHandler(event, ui)
@@ -46,6 +46,18 @@
                     var selectedObj = ui.item;
                     $('.ui-menu-item').css('position', 'absolute');
                 }
+                $('#follow').click(function() {
+                    var user_id;
+                    var profile_id;
+                    user_id = $(this).attr("data-user");
+                    profile_id = $(this).attr("data-profile");
+                    $.get('/follow', {user_id: user_id, profile_id: profile_id}, function(data){
+                        $('.message-section').text(data.message).show();
+                        setTimeout(function() {
+                          $(".message-section").fadeOut().empty();
+                        }, 5000);
+                    });
+                });
             </script>
         {% bootstrap_javascript %}
     {% endblock %}

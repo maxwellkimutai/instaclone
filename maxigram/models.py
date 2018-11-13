@@ -6,6 +6,22 @@ class Profile(models.Model):
     profile_photo = models.ImageField(upload_to = 'profile_images',blank = True)
     bio = models.TextField(max_length = 100,blank = True)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    followers = models.ManyToManyField(User,blank=True,related_name='followers')
+
+    def save_profile(self):
+        self.save()
+
+    def update_bio(self,bio):
+        self.bio = bio
+        self.save()
+
+    def delete_profile(self):
+        self.delete()
+
+    @classmethod
+    def search(cls,username):
+        user = User.objects.get(username = username)
+        return user
 
 class Image(models.Model):
     image = models.ImageField(upload_to = 'images/')
@@ -23,6 +39,16 @@ class Image(models.Model):
     def get_images(cls):
         images = cls.objects.all().order_by('-pub_date')
         return images
+
+    def save_image(self):
+        self.save()
+
+    def delete_image(self):
+        self.delete()
+
+    def update_caption(self,caption):
+        self.image_caption = caption
+        self.save()
 
 class Comment(models.Model):
     comment = models.CharField(max_length = 1000)

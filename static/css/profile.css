@@ -13,11 +13,8 @@ Flexbox and floats are used as a fallback so that browsers which don't support g
 :root {
     font-size: 10px;
 }
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
+.navbar,.navbar-brand{
+    font-size: 17px;
 }
 
 body {
@@ -139,11 +136,6 @@ img {
 .panel{
   margin: auto;
 }
-
-
-
-
-
 
 .profile-user-settings,
 .profile-stats,
@@ -361,13 +353,7 @@ img {
     }
 }
 
-/* Spinner Animation */
 
-@keyframes loader {
-    to {
-        transform: rotate(360deg);
-    }
-}
 
 /*
 

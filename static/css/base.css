@@ -1,8 +1,22 @@
+.container {
+    max-width: 93.5rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
 .bg-white{
     background-color: white;
 }
-body{
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+body {
+    font-family: "Open Sans", Arial, sans-serif;
+    min-height: 100vh;
     background-color: #fafafa;
+    color: #262626;
+    padding-bottom: 3rem;
 }
 .navbar-items{
     display: flex;

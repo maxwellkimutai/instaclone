@@ -11,9 +11,6 @@
 
   <link rel="stylesheet" href="../static/css/profile.css">
 
-
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
-
 </head>
 
 <div class="container">
@@ -28,12 +25,16 @@
 
     <div class="profile-user-settings">
 
+      <div class="message-section bg-light w-50" style="display:none; font-size:17px;"></div>
+
       <h1 class="profile-user-name">{{profile.user.username}}</h1>
 
       {% if user == profile.user%}
       <button class="btn profile-edit-btn"> <a href="{%url 'edit_profile' profile.user%}">Edit Profile</a></button>
 
       <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true" data-toggle="modal" data-target="#settings"></i></button>
+      {%else%}
+      <button id="follow" class="btn profile-edit-btn" data-user="{{user.id}}" data-profile="{{profile.id}}" >Follow</button>
       {%endif%}
     </div>
 
@@ -41,8 +42,8 @@
 
       <ul>
         <li><span class="profile-stat-count">{{images.count}}</span> posts</li>
-        <li><span class="profile-stat-count">0</span> followers</li>
-        <li><span class="profile-stat-count">0</span> following</li>
+        <li><span class="profile-stat-count">{{profile.followers.all.count}}</span> followers</li>
+        <li><span class="profile-stat-count">{{following}}</span> following</li>
       </ul>
 
     </div>
@@ -128,8 +129,8 @@
   </div>
 
   {% endfor%}
-
     </div>
+
   <!-- End of gallery -->
 
 <!-- End of container -->
