@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'',include('maxigram.urls')),
     url(r'^accounts/', include('django_registration.backends.one_step.urls')),
     url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^logout/$', views.logout, {"next_page": '/'},name='logout')
 ]

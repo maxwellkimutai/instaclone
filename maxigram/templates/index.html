@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <img src="{{image.image.url}}" class="card-img-top" style="padding: 0px; margin:0px;">
+        <img src="{{image.image.url}}" class="card-img-top" style="padding: 0px; margin:0px;" data-toggle="modal" data-target="#{{image.id}}">
         <div class="card-body">
             <i class="far fa-heart" id="likes{{image.id}}" data-imgid="{{image.id}}" data-liker={{user}}></i>
             <p> <span id="like{{image.id}}">{{image.likes.all.count}}</span> likes <br> <strong> <a href="{%url 'profile' image.user%}">{{image.user}}</a></strong> {{image.image_caption}} <br> <span class="text-secondary">{{image.pub_date|timesince}} ago</span> </p>
@@ -29,6 +29,27 @@
                     </p>
                     {%endif%}
                 {%endfor%}
+            </div>
+            <!-- Modal -->
+            <div id="{{image.id}}" class="modal fade" role="dialog">
+              <div class="modal-dialog" style="max-width: 850px!important;">
+
+                <!-- Modal content-->
+                <div class="modal-content ">
+                  <div class="modal-header">
+                    <h4 class="modal-title">{{image.title}}</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                    <img src="{{image.image.url}}" alt="" class="img-fluid">
+                    <i class="far fa-heart" id="likes{{image.id}}" data-imgid="{{image.id}}" data-liker={{user}}></i>
+                    <p> <span id="like{{image.id}}">{{image.likes.all.count}}</span> likes <br> <strong> <a href="{%url 'profile' image.user%}">{{image.user}}</a></strong> {{image.image_caption}} <br> <span class="text-secondary">{{image.pub_date|timesince}} ago</span> </p>
+                  </div>
+                  <div class="modal-footer">
+                  </div>
+                </div>
+
+              </div>
             </div>
         </div>
         <script type="text/javascript">
