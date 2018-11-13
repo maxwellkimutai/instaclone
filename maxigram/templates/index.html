@@ -8,7 +8,7 @@
             <div class="header media" style="background-color:white;">
                 <img src="{{image.profile.profile_photo.url}}" class="mr-3 rounded-circle" width="50px" height="50px">
                 <div class="media-body">
-                    <h4 class="my-0">{{image.profile.user}}</h4>
+                    <h4 class="my-0"><a href="{%url 'profile' image.user%}">{{image.user}}</a></h4>
                 </div>
             </div>
         </div>
