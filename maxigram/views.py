@@ -105,5 +105,10 @@ def edit_profile(request,username):
             bio.user = current_user
             bio.save()
         return redirect('index')
-    form = ProfileForm()
+    elif Profile.objects.get(user=current_user):
+        profile = Profile.objects.get(user=current_user)
+        form = ProfileForm(instance=profile)
+    else:
+        form = ProfileForm()
+
     return render(request,'edit_profile.html',{"form":form})
