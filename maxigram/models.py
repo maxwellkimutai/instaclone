@@ -21,7 +21,7 @@ class Image(models.Model):
 
     @classmethod
     def get_images(cls):
-        images = cls.objects.all()
+        images = cls.objects.all().order_by('-pub_date')
         return images
 
 class Comment(models.Model):
