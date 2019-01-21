@@ -95,7 +95,7 @@
       <div class="gallery-item-info">
         <ul>
           <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>{{image.likes.all.count}}</li>
-          <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i>80</li>
+          <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i>5</li>
         </ul>
     </div>
 
@@ -117,10 +117,10 @@
 
         </div>
         <div class="modal-body">
-              <img src="{{post.post.url}}?w=800&h=1000&fit=crop" class="gallery-image like" id="likes-{{forloop.counter0}}" data-comid="{{post.id}}">
+              <img src="{{image.image.url}}?w=800&h=1000&fit=crop" class="gallery-image like" id="likes-{{forloop.counter0}}" data-comid="{{image.id}}">
         </div>
         <div class="modal-footer">
-          <p class="card-title username like"  id="likes-{{forloop.counter0}}" data-comid="{{post.id}}" >{{post.likes}} likes</p>
+          <p class="card-title username like"  id="likes-{{forloop.counter0}}" data-comid="{{image.id}}" >{{image.likes.all.count}} likes</p>
           <p class="username">{{post.username}} <span class="caption">{{post.caption|truncatechars:300 |safe }}</span></p>
 
         </div>

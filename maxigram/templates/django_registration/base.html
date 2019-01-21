@@ -1,36 +1,33 @@
 {% load bootstrap4 %}
 {% load staticfiles %}
+{% load static%}
+
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+    <title>Account</title>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endif %}
 
-
-  {%if title%}
-
-  <title>{{title}}</title>
-
-  {%endif%}
-
-  {% block styles %}
-    {% bootstrap_css %}
+    {% block styles %}
+      {% bootstrap_css%}
+    {% endblock %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-  {% endblock %}
 
-</head>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  </head>
+  <body>
+    {% block content %} {% endblock %}
 
-<body>
+    {% block scripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- {% bootstrap_javascript% } -->
+    {% endblock %}
 
-  {% block content %}  {%endblock%}
-
-
-  {% block scripts %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    {% bootstrap_javascript %}
-  {% endblock %}
-
-</body>
-
+  </body>
 </html>

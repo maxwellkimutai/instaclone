@@ -1,6 +1,8 @@
+{% load static %}
+
 <nav class="navbar navbar-light bg-white sticky-top" style="box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 5px rgba(0,0,0,.075); padding-left:120px; padding-right:120px;">
     <div class="container navbar-items" >
-        <div class="d-flex justify-content-start"><a class="navbar-brand" href="{% url 'index' %}">Instagram</a></div>
+        <div class="d-flex justify-content-start"><a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'img/navbar.png' %}" alt="" class="img-responsive" width="24" height="24"></a></div>
         <div class="d-flex justify-content-center navbar-item">
             <form action="{% url 'search_user' %}" class="navbar-form" role="search">
                 <div class="input-group ui-widget">
