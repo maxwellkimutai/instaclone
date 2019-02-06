@@ -1,4 +1,4 @@
-# Istagram Clone
+# Instagram Clone
 #### This is a clone of the famous social media app instagram , November 5, 2018
 #### By **Maxwell Kimutai**
 ## Description
